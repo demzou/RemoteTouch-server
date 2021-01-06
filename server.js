@@ -84,6 +84,7 @@ io.sockets.on('connection',
 
     setInterval( function() {
         sendBuzz(socket);
+        buttonCount = 0;
     }, 500);
 
     function sendBuzz(socket) {
@@ -94,8 +95,6 @@ io.sockets.on('connection',
         socket.broadcast.emit('buzz', '0');
         console.log('sent Buzz: 0');
       }
-
-      buttonCount = 0;
     }
 
     // setInterval( function() {
