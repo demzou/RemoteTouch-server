@@ -63,19 +63,16 @@ let buttonCount = 0;
 // }
 
 setInterval( function() {
-  sendBuzz(socket);
+  if(buttonCount > 0) {
+    io.sockets.emit('buzz', '1');
+    console.log('sent buzz: 1');
+  } else { 
+    io.sockets.emit('buzz', '0');
+    console.log('sent Buzz: 0');
+  }
+  buttonCount = 0;
 }, 1000);
 
-function sendBuzz(socket) {
-if(buttonCount > 0) {
-  io.sockets.emit('buzz', '1');
-  console.log('sent buzz: 1');
-} else { 
-  io.sockets.emit('buzz', '0');
-  console.log('sent Buzz: 0');
-}
-buttonCount = 0;
-}
 
 
 //let mySocket = null
