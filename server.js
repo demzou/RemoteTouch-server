@@ -85,7 +85,7 @@ io.sockets.on('connection',
     setInterval( function() {
         sendBuzz(socket);
         buttonCount = 0;
-    }, 500);
+    }, 1000);
 
     function sendBuzz(socket) {
       if(buttonCount > 0) {
