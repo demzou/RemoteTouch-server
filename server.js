@@ -43,6 +43,8 @@ const { match } = require('assert');
 let io = socketio.listen(server);
 console.log(`Listening for socket connections on port ${port}`);
 
+let buttonCount = 0;
+
 
 
 // Register a callback function to run when we have an individual connection
@@ -72,19 +74,38 @@ io.sockets.on('connection',
 
     socket.on('button',
     function(data) {
+        if(data == 1) {
+          buttonCount++;
+        }
        console.log('button: ' + data);
-       socket.broadcast.emit('button', data);
+       //socket.broadcast.emit('button', data);
       }
     );
 
     setInterval( function() {
-        sendHello(socket);
-        console.log('sent Hello');
-    }, 10000);
+        sendBuzz(socket);
+    }, 500);
 
-    function sendHello(socket) {
-        socket.broadcast.emit('event', "hello");
+    function sendBuzz(socket) {
+      if(buttonCount > 0) {
+        socket.broadcast.emit('button', '1');
+        console.log('sent buzz: 1');
+      } else { 
+        socket.broadcast.emit('button', '0');
+        console.log('sent Buzz: 0');
+      }
+
+      buttonCount = 0;
     }
+
+    // setInterval( function() {
+    //     sendHello(socket);
+    //     console.log('sent Hello');
+    // }, 10000);
+
+    // function sendHello(socket) {
+    //     socket.broadcast.emit('event', "hello");
+    // }
         
     
     // Specify a callback function to run when the client disconnects
