@@ -88,10 +88,10 @@ io.sockets.on('connection',
 
     function sendBuzz(socket) {
       if(buttonCount > 0) {
-        socket.broadcast.emit('button', '1');
+        socket.broadcast.emit('buzz', '1');
         console.log('sent buzz: 1');
       } else { 
-        socket.broadcast.emit('button', '0');
+        socket.broadcast.emit('buzz', '0');
         console.log('sent Buzz: 0');
       }
 
