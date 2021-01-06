@@ -45,13 +45,47 @@ console.log(`Listening for socket connections on port ${port}`);
 
 let buttonCount = 0;
 
+// const sockets = []
+
+// function sendData() {
+  
+//   if (sockets.length > 0) {
+//     if (buttonCount > 0) {
+//       sockets[0].broadcast.emit(1)
+//     }
+//     else {
+//       sockets[0].broadcast.emit(0)
+//     }  
+//   }
+
+//   buttonCount = 0
+  
+// }
+
+setInterval( function() {
+  sendBuzz(socket);
+}, 1000);
+
+function sendBuzz(socket) {
+if(buttonCount > 0) {
+  io.sockets.emit('buzz', '1');
+  console.log('sent buzz: 1');
+} else { 
+  io.sockets.emit('buzz', '0');
+  console.log('sent Buzz: 0');
+}
+buttonCount = 0;
+}
 
 
+//let mySocket = null
 // Register a callback function to run when we have an individual connection
 // This is run for each individual client that connects
 io.sockets.on('connection',
   // Callback function to call whenever a socket connection is made
   function (socket) {
+
+    //sockets.push(socket)
 
     // Print message to the console indicating that a new client has connected
     console.log("New client: " + socket.id);
@@ -82,20 +116,20 @@ io.sockets.on('connection',
       }
     );
 
-    setInterval( function() {
-        sendBuzz(socket);
-    }, 1000);
+    // setInterval( function() {
+    //     sendBuzz(socket);
+    // }, 1000);
 
-    function sendBuzz(socket) {
-      if(buttonCount > 0) {
-        socket.broadcast.emit('buzz', '1');
-        console.log('sent buzz: 1');
-      } else { 
-        socket.broadcast.emit('buzz', '0');
-        console.log('sent Buzz: 0');
-      }
-      buttonCount = 0;
-    }
+    // function sendBuzz(socket) {
+    //   if(buttonCount > 0) {
+    //     socket.broadcast.emit('buzz', '1');
+    //     console.log('sent buzz: 1');
+    //   } else { 
+    //     socket.broadcast.emit('buzz', '0');
+    //     console.log('sent Buzz: 0');
+    //   }
+    //   buttonCount = 0;
+    // }
 
     // setInterval( function() {
     //     sendHello(socket);
@@ -111,6 +145,7 @@ io.sockets.on('connection',
     socket.on('disconnect',
       function() {
         console.log("Client has disconnected: " + socket.id);
+        // remove socket 
       }
     );
   }
